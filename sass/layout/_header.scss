@@ -1,0 +1,64 @@
+.header {
+  height: 85vh;
+  position: relative;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.9),
+      rgba($color-primary-dark, 0.9)
+    ),
+    url(../img/hero-small.jpg);
+  /* fix the element box to the size of the background image */
+  background-size: cover;
+  /* position the image at the top of the element */
+  background-position: top;
+
+  @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+    height: 95vh;
+    /* clips the element to the shape of the polygon */
+    --webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  }
+
+  // apple retina screen is 192 dpi; apply when higher
+  @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+    (mind-width: 125em),
+    (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+    (min-resolution: 2dppx) and (min-width: 37.5em) {
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.9),
+        rgba($color-primary-dark, 0.9)
+      ),
+      url(../img/hero.jpg);
+  }
+
+  @include respond(phone) {
+    --webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+  }
+
+  &--text-box {
+    position: absolute;
+    // top: 40%;
+    // left: 50%;
+    // /* 50% will be in relation to the element not parent */
+    // transform: translate(
+    //   -50%,
+    //   -50%
+    // ); /* move the element 50% from the left and 50% from the top */
+    inset: 40% 0 50% 0;
+    margin: auto;
+    text-align: center;
+  }
+
+  &--logo-box {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+  }
+
+  &--logo {
+    height: 3.5rem;
+    /* width will be figure out by the browser  */
+  }
+}

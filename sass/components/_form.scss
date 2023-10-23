@@ -1,0 +1,117 @@
+.form {
+  &__group:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  &__input {
+    font-size: 1.5rem;
+
+    // input props don't inherit from the parent
+    font-family: inherit;
+    color: inherit;
+    padding: 1.5rem 2rem; // always more padding on the sides than on the top and bottom
+    border-radius: 0.2rem;
+    background-color: rgba($color-white, 0.5);
+    border-bottom: 0.3rem solid transparent;
+    width: 90%;
+    display: block; // so that it takes the full width of the parent
+    border: none;
+    transition: all 0.3s;
+
+
+    
+    @include respond(tab-port) {
+      width: 100%;
+    }
+
+    &:focus {
+      outline: none;
+
+      box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+      border-bottom: 0.3rem solid $color-primary;
+
+      // for invalid state of the input
+      &:invalid {
+        border-bottom: 0.3rem solid $color-secondary-dark;
+      }
+    }
+
+    // for pseudo classes it uses two colons
+    &::-webkit-input-placeholder {
+      color: $color-grey-dark-2;
+    }
+  }
+
+  &__label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-left: 2rem;
+    margin-top: 0.7rem;
+    display: block;
+    transition: all 0.3s;
+  }
+
+  // for sibling selector or adjacent selector
+  // use the sibling selector to select the label that is right next to the input
+  // the + sign means the adjacent selector
+  &__input:placeholder-shown + &__label {
+    opacity: 0; // to animate the label
+    visibility: hidden; // this will hide the label but it will still take up space
+    transform: translateY(-4rem);
+  }
+
+  &__radio-group {
+    width: 49%;
+    // to not create line break and show side by side
+    display: inline-block;
+
+    @include respond(tab-port) {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__radio-input {
+    display: none;
+  }
+
+  &__radio-label {
+    position: relative;
+    cursor: pointer;
+    font-size: $default-font-size;
+    padding-left: 4.5rem;
+  }
+
+  &__radio-button {
+    height: 3rem;
+    width: 3rem;
+    border: 0.5rem solid $color-primary;
+    border-radius: 50%;
+    // to occupy the full space of the parent
+    display: inline-block;
+    position: absolute;
+    inset: -0.4rem 0 0 0;
+
+    &::after {
+      content: "";
+      display: block;
+      height: 1.3rem;
+      width: 1.3rem;
+      border-radius: 50%;
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      text-align: center;
+      background-color: $color-primary;
+      opacity: 0;
+    }
+  }
+
+  // change the opacity of the pseudo element when the radio button is checked
+  // as sson as we checked the radio button, the opacity of the pseudo element will be 1
+  // using adjacent selector to select the radio label and the child of the radio label
+  // which is the radio button
+  &__radio-input:checked ~ &__radio-label &__radio-button::after {
+    opacity: 1;
+  }
+}

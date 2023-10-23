@@ -1,0 +1,98 @@
+.story {
+  width: 75%;
+  box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+  background-color: rgba($color-white, 0.5);
+  border-radius: 0.3rem;
+  padding: 6rem;
+  font-size: $default-font-size;
+  padding-left: 9rem;
+  transform: skewX(-12deg);
+
+  @include respond(tab-port) {
+    width: 100%;
+    padding: 4rem;
+    padding-left: 7rem;
+
+  }
+
+  @include respond(phone) {
+    transform: skewX(0);
+  }
+
+  & > * {
+    transform: skewX(12deg);
+  }
+
+  &__shape {
+    position: relative;
+
+    // shape outside only works with floated elements
+    float: left;
+    // shape outside defines the shape of the element
+    // first number is the raidus of the circle and
+    // the second number is the position of the circle
+    // in relation to the element
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%);
+
+
+    //best way to deal with floatted elements is to transform the other elements
+    transform: translateX(-3rem) skewX(12deg);
+
+    // when clip path is not supportted, the image will be too big , so hide the overflow
+    overflow: hidden;
+
+
+    @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+      -webkit-clip-path: circle(50% at 50% 50%);
+      clip-path: circle(50% at 50% 50%);
+      width: 15rem;
+      height: 15rem;
+    }
+
+    @include respond(phone) {
+      transform: translateX(-3rem) skewX(0);
+    }
+  }
+
+  &__image {
+    height: 100%;
+    transform: translateX(-4rem) scale(1.4);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  &__text {
+    transform: skewX(12deg);
+
+
+    @include respond(phone) {
+      transform: skewX(0);
+    }
+  }
+
+  &__caption {
+    position: absolute;
+    inset: 45% 0 50% 0;
+    text-align: center;
+    text-wrap: pretty;
+    margin: auto;
+    color: $color-white;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    opacity: 0;
+    transition: all 0.6s;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  &:hover &__caption {
+    opacity: 1;
+    transform: translateY(-40%);
+  }
+
+  &:hover &__image {
+    transform: translateX(-4rem) scale(1);
+    filter: blur(0.3rem) brightness(80%);
+  }
+}

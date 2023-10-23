@@ -1,0 +1,78 @@
+.composition {
+  position: relative;
+
+
+  @include respond(tab-port) {
+    width: 90%;
+   
+    margin: 0 auto;
+    padding-top: 2rem;
+  }
+  
+
+  // using percentages to make it responsive to the size of the parent
+  &__photo {
+    width: 55%;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.4);
+    border-radius: 0.2rem;
+    position: absolute;
+    z-index: 10;
+    transition: all 0.2s;
+    // with outline we can create a border where we can control or
+    // add space between the border and the element
+    outline-offset: 2rem;
+
+    @include respond(tab-port) {
+      float: left;
+      position: relative;
+      width: 33.333333%;
+      box-shadow: 0 1.5rem 3rem rgba($color-black, 0.2);
+    }
+
+    &--p1 {
+      left: 0;
+      // negative moves it upward
+      top: -2rem;
+
+      @include respond(tab-port) {
+        top: 0;
+        transform: scale(1.2);
+      }
+    }
+
+    &--p2 {
+      right: 0;
+      top: 2rem;
+
+      @include respond(tab-port) {
+        top: -1rem;
+        transform: scale(1.3);
+        z-index: 100;
+      }
+    }
+
+    &--p3 {
+      left: 20%;
+      top: 10rem;
+
+      @include respond(tab-port) {
+        top: 0;
+        left: 0;
+        transform: scale(1.2);
+      }
+    }
+
+    &:hover {
+      outline: 1.5rem solid $color-primary;
+      // move it up and scale up
+      transform: scale(1.05) translateY(-0.5rem);
+      box-shadow: 0 2.5rem 4rem rgba($color-black, 0.5);
+      z-index: 20;
+    }
+  }
+
+  // the photo that is not hovered
+  &:hover &__photo:not(:hover) {
+    transform: scale(0.95);
+  }
+}

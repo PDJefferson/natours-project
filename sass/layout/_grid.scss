@@ -1,0 +1,82 @@
+.grid-test {
+  width: 100%;
+  height: auto;
+}
+
+.row {
+  display: flex;
+  max-width: $grid-width;
+  margin: 0 auto;
+  flex-direction: row;
+  justify-content: center;
+  /* make columns respect the width of the parent */
+  flex-wrap: wrap;
+  text-align: start;
+  column-gap: $gutter-horizontal;
+
+  @include respond(tab-port) {
+    max-width: 50rem;
+  }
+
+  /* remove last child's margin bottom */
+  &:not(:last-child) {
+    margin-bottom: $gutter-vertical;
+
+    @include respond(tab-port) {
+      margin-bottom: $gutter-vertical-small;
+    }
+  }
+}
+
+[class^="col-"] {
+  flex-direction: column;
+
+  &:not(:last-child) {
+    @include respond(tab-port) {
+      margin-bottom: $gutter-vertical-small;
+    }
+  }
+
+  @include respond(tab-port) {
+    flex: 0 0 100% !important;
+  }
+}
+
+.col {
+  &-1-of-2 {
+    /* gutter horizontal is the space between columns so that means the total width of the columns is 100% - gutter horizontal but since it is in rem units  where 1rem = 62.5 % then we need to divide the gutter horizontal by 62.5% to get the value in rem units */
+    flex: 0 1 calc((100% - #{$gutter-horizontal}) / 2);
+  }
+
+  &-1-of-3 {
+    flex: 0 1 calc((100% - 2 * #{$gutter-horizontal}) / 3);
+  }
+
+  &-1-of-4 {
+    flex: 0 1 calc((100% - 3 * #{$gutter-horizontal}) / 4);
+  }
+
+  &-2-of-3 {
+    flex: 0 1
+      calc(2 * ((100% - 2 * #{$gutter-horizontal}) / 3) + #{$gutter-horizontal});
+  }
+
+  &-2-of-4 {
+    flex: 0 1
+      calc(2 * ((100% - 3 * #{$gutter-horizontal}) / 4) + #{$gutter-horizontal});
+  }
+
+  &-3-of-4 {
+    /* the logic is as follows:
+        for each row we want the last column to cover 3/4 of the space
+        so we need to  get the space of 1 column that is, of column that is divided by 4 
+        and multiply it by 3 to acommodate for the horizontal gutter. 
+        Finally add the gutter horizontal twice since we 
+        have 2 gutters horizontal between the 3 columns
+    */
+    flex: 0 1
+      calc(
+        3 * ((100% - 3 * #{$gutter-horizontal}) / 4) + 2 * #{$gutter-horizontal}
+      );
+  }
+}
